@@ -7,7 +7,7 @@ scene = new THREE.Scene();
 // CAMERA
 camera = new THREE.PerspectiveCamera(45, 1, 0.1, 10000);
 scene.add( camera );
-camera.position.set( 10, 10, -10);
+camera.position.set(100,100,-200);
 camera.lookAt( scene.position );
 
 // RENDERER
@@ -17,7 +17,7 @@ renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( window.innerWidth, window.innerHeight );
 
 container = document.body;
-container.appendChild( renderer.domElement );
+
 
 scene.background = new THREE.Color(0x000000);
 var light = new THREE.PointLight( 0xff2200 );
@@ -96,6 +96,7 @@ render();
 
 function start_mic(){
   if (navigator.getUserMedia) {
+		container.appendChild( renderer.domElement );
     navigator.getUserMedia({ audio: true, video: false }, function( stream ) {
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       analyser = audioCtx.createAnalyser();
