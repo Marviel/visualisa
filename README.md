@@ -8,3 +8,4 @@
 
 **A Mischievous 3D Audio Visualizer using WebRTC + Three.js**
 
+**Project is at Mega-Alpha Prototype Stage, I promise I'm not a bad programmer**
