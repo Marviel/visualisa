@@ -7,7 +7,7 @@ scene = new THREE.Scene();
 // CAMERA
 camera = new THREE.PerspectiveCamera(45, 1, 0.1, 10000);
 scene.add( camera );
-camera.position.set(100,100,-200);
+camera.position.set(300,300,-300);
 camera.lookAt( scene.position );
 
 // RENDERER
