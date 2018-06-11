@@ -30,7 +30,7 @@ var material = new THREE.MeshPhongMaterial( { color: 0xffffff, morphTargets: tru
 // construct 8 blend shapes
 for ( var i = 0; i < 8; i ++ ) {
   var vertices = [];
-  for ( var v = 0; v < geometry.vertices.length -4 ; v ++ ) {
+  for ( var v = 0; v < geometry.vertices.length; v ++ ) {
   vertices.push( geometry.vertices[ v ].clone() );
   if ( v === i ) {
   vertices[ vertices.length - 1 ].x *= 4;
