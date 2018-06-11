@@ -29,16 +29,16 @@ var geometry = new THREE.BoxGeometry( 100, 100, 100 );
 var material = new THREE.MeshPhongMaterial( { color: 0xffffff, morphTargets: true } );
 // construct 8 blend shapes
 for ( var i = 0; i < 8; i ++ ) {
-	var vertices = [];
-	for ( var v = 0; v < geometry.vertices.length -4 ; v ++ ) {
-		vertices.push( geometry.vertices[ v ].clone() );
-		if ( v === i ) {
-			vertices[ vertices.length - 1 ].x *= 4;
-			vertices[ vertices.length - 1 ].y *= 4;
-			vertices[ vertices.length - 1 ].z *= 4;
-		}
-	}
-	geometry.morphTargets.push( { name: "target" + i, vertices: vertices } );
+  var vertices = [];
+  for ( var v = 0; v < geometry.vertices.length -4 ; v ++ ) {
+  vertices.push( geometry.vertices[ v ].clone() );
+  if ( v === i ) {
+  vertices[ vertices.length - 1 ].x *= 4;
+  vertices[ vertices.length - 1 ].y *= 4;
+  vertices[ vertices.length - 1 ].z *= 4;
+  }
+  }
+  geometry.morphTargets.push( { name: "target" + i, vertices: vertices } );
 }
 mesh = new THREE.Mesh( geometry, material );
 scene.add( mesh );
@@ -96,7 +96,10 @@ render();
 
 function start_mic(){
   if (navigator.getUserMedia) {
-		container.appendChild( renderer.domElement );
+  var el = document.getElementById('enable-microphone-button');
+  el.remove(); // Removes the div with the 'div-02' id
+
+  container.appendChild( renderer.domElement );
     navigator.getUserMedia({ audio: true, video: false }, function( stream ) {
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       analyser = audioCtx.createAnalyser();
