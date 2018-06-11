@@ -1,7 +1,5 @@
-# 3D Audio Visualizer (using WebRTC + Three.js) 
+# Visualisa - Fully-Frontend 3D Audio Visualization
+*Vi-Soo-Uh-Leesa*
 
-
-
-# Inspiration
-![Demo of audio spectrum reacting to WebRTC audio from microphone](http://i.giphy.com/3o85xx5BmjSSt34VG0.gif)
-
+**3D Audio Visualizer using WebRTC + Three.js**
+![Mona Lisa With 3D Glasses](img/Mona-Lisa-3D-Glasses-Cropped.jpg?raw=true "Mona Lisa With 3D Glasses")
