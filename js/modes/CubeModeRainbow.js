@@ -1,3 +1,18 @@
+function hexToRgb(hex) {
+        var bigint = parseInt(hex, 16);
+        var r = (bigint >> 16) & 255;
+        var g = (bigint >> 8) & 255;
+        var b = bigint & 255;
+
+        return [r, g, b];
+}
+
+function rgbToHex(red, green, blue) {
+            var rgb = blue | (green << 8) | (red << 16);
+            return '#' + (0x1000000 + rgb).toString(16).slice(1)
+}
+
+
 class CubeModeRainbow {
   constructor(spacing, colorDivisor){
     this.spacing = spacing;
@@ -29,7 +44,7 @@ class CubeModeRainbow {
           else{
             this.vcMapping[f[k]] = [[f,i]];
           }
-          f.vertexColors[i] = new THREE.Color(0x00ffff);
+          f.vertexColors[i] = new THREE.Color(this.color);
         });
       });
 
@@ -70,26 +85,35 @@ class CubeModeRainbow {
           var ks = Object.keys(this.calibAcc).sort((a,b)=>{return this.calibAcc[a]-this.calibAcc[b]});
           this.controlBins = ks.slice(Math.max(ks.length - 8, 1))
         }
+
+        // Get the R, G, B of our source (unlit)
+        // and dest (lit) regions
+        const rgbColors = hexToRgb(this.color.toString(16));
+        const mapRgbColors = this.colorMapping.map(x => hexToRgb(x.toString(16)));
+        
+
         for(var i = 0; i < 8; i++) {
+          // This could be precalculated by the pre-mode step
           const dataArrI = Math.floor(i*(binCount/this.spacing)); // Evenly spaced over frequencies.
+          
+          // We calculate the differences of the source from the dest
+          var sign = -1; // This sets whether we're going to dest from source or opposite
 
-          var sign = -1;
           if (this.color > this.colorMapping[i]) sign = -sign;
-          const diff = sign*(this.color - this.colorMapping[i]);
+          const diffs = rgbColors.map((x, j) => sign*(x - mapRgbColors[i][j]))
 
-          //var dataArrI(i + 10) *2
-          //material.uniforms.amplitude.value[i] = -(dataArray[(i + 10) * 2] / 255) + 1;
-          //material.color.r = (dataArray[dataArrI]/255);
           this.mesh.morphTargetInfluences[ i ] = dataArray[this.controlBins[i]]/255;
           this.vcMapping[i].forEach(([f,j])=>{
-            f.vertexColors[j].set(this.color+diff*(dataArray[this.controlBins[i]]/10));
-            // f.vertexColors[j].r = dataArray[dataArrI]/100;
-            // f.vertexColors[j].g = dataArray[dataArrI]/255;
+            const adds = diffs.map(d => d*(dataArray[this.controlBins[i]]/255));
+            const totals = rgbColors.map((c,q) => c + adds[q]);
+            const destColor = rgbToHex(totals[0], totals[1], totals[2]); 
+
+            f.vertexColors[j].set(destColor);
           });
         };
-        //this.material.color.r = (dataArray[0]/this.colorDivisor)
         this.mesh.geometry.colorsNeedUpdate = true;
-        this.material.reflectivity = (dataArray[0]/255)
+        
+        this.material.reflectivity = 255;
       }
     }
   }

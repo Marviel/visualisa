@@ -22,7 +22,7 @@ class VisualisaRoot {
 
 
     this.scene.background = new THREE.Color(0x000000);
-    var light = new THREE.PointLight( 0xff2200 );
+    var light = new THREE.PointLight( 0xffffff);
     light.position.set( 100, 100, 100 );
     this.scene.add( light );
     var light = new THREE.AmbientLight( 0x666666);
