@@ -1,3 +1,19 @@
+const modeMap = {
+  "Cube": {
+    "class": CubeMode,
+    "defaultArgs": [8, 255]
+  },
+  "Brain": {
+    "class": BrainMode,
+    "defaultArgs": [8, 255]
+  },
+  "CubeRainbow": {
+    "class": CubeModeRainbow,
+    "defaultArgs": [8, 255]
+  }
+}
+
+
 class VisualisaRoot {
   constructor(){
     // standard global variables
@@ -97,8 +113,13 @@ class VisualisaRoot {
       this.renderer.render( this.scene, this.camera );
     }
 
-    // Set mode..
-    this.mode = new CubeMode(8, 255);
+    // If we have url params about selectedMode, go ahead and set our mode from that.
+    // Otherwise, go with the default.
+    var url = new URL(window.location.href);
+    var selectedMode = url.searchParams.get("selectedMode");
+    this.mode = selectedMode && modeMap[selectedMode] ?
+      new modeMap[selectedMode].class(...modeMap[selectedMode].defaultArgs) :
+      new CubeMode(8, 255)
     this.mode.modeEnter(this);
 
     // Render.
