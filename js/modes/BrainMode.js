@@ -54,6 +54,7 @@ class BrainMode {
           const mesh = new THREE.Mesh( geometry, material )
 
           mesh.scale.fromArray([10,10,10])
+          mesh.position.fromArray([0,-50,0])
 
           this.brainParts.push(mesh);
           vRoot.scene.add(mesh);
