@@ -65,7 +65,9 @@ class BrainMode {
     }
 
     this.modeExit = (vRoot)=>{
-      vRoot.scene.remove( this.mesh )
+      this.brainParts.map((m)=>{
+        vRoot.scene.remove(m);
+      })
     }
 
     this.modeAnimate = (vRoot, analyzer, dataArray)=>{
