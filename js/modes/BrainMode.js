@@ -53,6 +53,8 @@ class BrainMode {
           const material = new THREE.MeshPhongMaterial( { color: 0xffffff, transparent: true } );
           const mesh = new THREE.Mesh( geometry, material )
 
+          mesh.scale.fromArray([10,10,10])
+
           this.brainParts.push(mesh);
           vRoot.scene.add(mesh);
         });
