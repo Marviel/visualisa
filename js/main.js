@@ -18,6 +18,16 @@ class VisualisaRoot {
     this.renderer.setPixelRatio( window.devicePixelRatio );
     this.renderer.setSize( window.innerWidth, window.innerHeight );
 
+    this.onWindowResize = () => {
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.updateProjectionMatrix();
+        this.renderer.setSize( window.innerWidth, window.innerHeight );
+    }
+
+    // Call once at start for correct initializations.
+    this.onWindowResize();
+    window.addEventListener( 'resize', this.onWindowResize, false );
+
     this.container = document.body;
 
 
