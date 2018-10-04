@@ -46,6 +46,8 @@ class BrainMode {
     this.brainParts = []
 
     this.modeEnter = (vRoot)=>{
+      vRoot.camera.position.fromArray([300,0,300]);
+
       var loader = new THREE.STLLoader();
 
       this.brainPartNames.map((name)=>{
