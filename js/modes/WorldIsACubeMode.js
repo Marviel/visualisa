@@ -27,6 +27,34 @@ class WorldIsACubeMode {
         }
         this.geometry.morphTargets.push( { name: "target" + i, vertices: vertices } );
       }
+      // Sort our vertices into the octants.
+      // ---
+      // --+
+      // -+-
+      // -++
+      // +--
+      // +-+
+      // ++-
+      // +++
+      this.vMapping = this.geometry.vertices.reduce(
+        (acc, v, i) => {
+          // Convert x,y,z into a binary number based on positivity or negativity
+          const pos = v.toArray().map((ve) => ve > 0);
+          const num = pos.reduce((res, x) => res << 1 | x);
+          acc[num].add(i);
+          return acc
+        },
+        [
+          new Set(),
+          new Set(),
+          new Set(),
+          new Set(),
+          new Set(),
+          new Set(),
+          new Set(),
+          new Set()
+        ]
+      )
       this.mesh = new THREE.Mesh(this.geometry, this.material)
       vRoot.scene.add(this.mesh)
     }
