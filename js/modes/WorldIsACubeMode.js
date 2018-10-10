@@ -6,7 +6,7 @@ class WorldIsACubeMode {
     this.modeEnter = (vRoot)=>{
       this.geometry = new THREE.SphereGeometry(100, 32, 32)
       this.material = new THREE.MeshPhongMaterial({ morphTargets: true });
-      var texture = new THREE.TextureLoader().load( "img/earthmap1k.jpg" );
+      var texture = new THREE.TextureLoader().load( "img/8081_earthmap4k.jpg" );
       texture.wrapS = THREE.RepeatWrapping;
       texture.wrapT = THREE.RepeatWrapping;
       texture.repeat.set(1,1);
