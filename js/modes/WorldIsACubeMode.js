@@ -78,7 +78,7 @@ class WorldIsACubeMode {
 
       for ( var i = 0; i < 8; i ++ ) {
         var dataArrI = i % binCount; // Math.floor(i*(binCount/this.spacing)); // Evenly spaced over frequencies.
-        this.mesh.morphTargetInfluences[ i ] = dataArray[dataArrI]/255;
+        this.mesh.morphTargetInfluences[ i ] = 1 - dataArray[dataArrI]/255;
       }
     }
   }
