@@ -29,7 +29,6 @@ class CubeMode {
     }
 
     this.modeAnimate = (vRoot, analyzer, dataArray)=>{
-      console.log(this.spacing, this.colorDivisor)
       var binCount = analyzer.frequencyBinCount;
 
       for(var i = 0; i < 8; i++) {

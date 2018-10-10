@@ -50,7 +50,6 @@ class WorldIsACubeMode {
               // Where we take every vector and shoot it out by a multiplier
               // And then we truncate all the axes to whatever our max is.
               //return v.clone().multiplyScalar(100).clamp(-101, 101);
-              console.log(v)
               return v.clone().multiplyScalar(3).clampScalar(-100, 100);
             }
             else{
