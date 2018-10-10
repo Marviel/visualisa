@@ -12,21 +12,6 @@ class WorldIsACubeMode {
       texture.repeat.set(1,1);
       this.material.map  = texture;
 
-      // this.geometry = new THREE.BoxGeometry( 100, 100, 100 );
-      // this.material = new THREE.MeshPhongMaterial( { color: 0xffffff, morphTargets: true } );
-      // construct n blend shapes
-      for ( var i = 0; i < this.geometry.vertices.length / 8; i ++ ) {
-        var vertices = [];
-        for ( var v = 0; v < this.geometry.vertices.length; v ++ ) {
-          vertices.push( this.geometry.vertices[ v ].clone() );
-          if ( v === i ) {
-            vertices[ vertices.length - 1 ].x *= 1.2;
-            vertices[ vertices.length - 1 ].y *= 1.2;
-            vertices[ vertices.length - 1 ].z *= 1.2;
-          }
-        }
-        this.geometry.morphTargets.push( { name: "target" + i, vertices: vertices } );
-      }
       // Sort our vertices into the octants.
       // ---
       // --+
@@ -55,6 +40,26 @@ class WorldIsACubeMode {
           new Set()
         ]
       )
+
+      this.vMapping.map((vertsSet, octMapI) => {
+        this.geometry.morphTargets.push({
+          name: "target" + octMapI,
+          vertices: this.geometry.vertices.map((v, vi) => {
+            if(vertsSet.has(vi)){
+              // Basically we're gonna do a stupid mapping
+              // Where we take every vector and shoot it out by a multiplier
+              // And then we truncate all the axes to whatever our max is.
+              //return v.clone().multiplyScalar(100).clamp(-101, 101);
+              console.log(v)
+              return v.clone().multiplyScalar(3).clampScalar(-100, 100);
+            }
+            else{
+              return v;
+            }
+          })
+        })
+      })
+
       this.mesh = new THREE.Mesh(this.geometry, this.material)
       vRoot.scene.add(this.mesh)
     }
@@ -68,16 +73,10 @@ class WorldIsACubeMode {
 
       var onCount = 0;
 
-      for(var i = 0; i < this.geometry.vertices.length / 8; i++) {
+      for ( var i = 0; i < 8; i ++ ) {
         var dataArrI = i % binCount; // Math.floor(i*(binCount/this.spacing)); // Evenly spaced over frequencies.
-        //var dataArrI(i + 10) *2
-        //material.uniforms.amplitude.value[i] = -(dataArray[(i + 10) * 2] / 255) + 1;
-        //material.color.r = (dataArray[dataArrI]/255);
         this.mesh.morphTargetInfluences[ i ] = dataArray[dataArrI]/255;
-      };
-      // this.material.color.r = (dataArray[0]/this.colorDivisor)
-      // this.material.reflectivity = (dataArray[0]/255)
-      // }
+      }
     }
   }
 }
