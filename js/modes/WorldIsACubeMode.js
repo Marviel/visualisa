@@ -11,6 +11,10 @@ class WorldIsACubeMode {
       texture.wrapT = THREE.RepeatWrapping;
       texture.repeat.set(1,1);
       this.material.map  = texture;
+      this.material.bumpMap    = new THREE.TextureLoader().load( "img/earthbump1k.jpg" );
+      this.material.bumpScale = 0.1
+      this.material.specularMap    = new THREE.TextureLoader().load( "img/earthspec1k.jpg" );
+      this.material.specular  = new THREE.Color('grey')
 
       // Sort our vertices into the octants.
       // ---
