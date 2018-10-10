@@ -10,6 +10,10 @@ const modeMap = {
   "CubeRainbow": {
     "class": CubeModeRainbow,
     "defaultArgs": [8, 255]
+  },
+  "WorldIsACube": {
+    "class": WorldIsACubeMode,
+    "defaultArgs": [8, 255]
   }
 }
 
