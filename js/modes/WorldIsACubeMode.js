@@ -16,6 +16,10 @@ class WorldIsACubeMode {
       this.material.specularMap    = new THREE.TextureLoader().load( "img/earthspec1k.jpg" );
       this.material.specular  = new THREE.Color('grey')
 
+      this.hemLight = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 );
+      vRoot.scene.add(this.hemLight);
+
+
       // Sort our vertices into the octants.
       // ---
       // --+
@@ -76,9 +80,17 @@ class WorldIsACubeMode {
 
       var onCount = 0;
 
+      var total = dataArray.reduce((acc, v) => acc + v);
+      var avg = total / binCount;
+
+      var totalBass = dataArray.slice(binCount/8).reduce((acc, v) => acc + v);
+      var avgBass = totalBass / (binCount/8);
+      this.hemLight.intensity = avgBass/255;
+
       for ( var i = 0; i < 8; i ++ ) {
-        var dataArrI = i % binCount; // Math.floor(i*(binCount/this.spacing)); // Evenly spaced over frequencies.
-        this.mesh.morphTargetInfluences[ i ] = 1 - dataArray[dataArrI]/255;
+        //var dataArrI = i % binCount; // Math.floor(i*(binCount/this.spacing)); // Evenly spaced over frequencies.
+        var dataArrI = binCount / 2;
+        this.mesh.morphTargetInfluences[ i ] = 1 - avg/255;
       }
     }
   }
